@@ -25,7 +25,9 @@ public class CarController : MonoBehaviour
     
     public Transform leftFrontWheel, rightFrontWheel;
     public float maxWheelTurn = 25f;
-    
+
+    public int nextCheckpoint;
+    public int currentLap;    
    
    
     // Start is called before the first frame update
@@ -120,6 +122,22 @@ public class CarController : MonoBehaviour
         {
             transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, turnInput * turnStrength * Time.deltaTime * Mathf.Sign(speedInput) * (theRB.velocity.magnitude / maxSpeed), 0f));
         }
+
+    }
+
+    public void CheckpointHit(int cpNumber)
+    {
+        if (cpNumber == nextCheckpoint)
+        {
+            nextCheckpoint++;
+
+            if (nextCheckpoint == RaceManager.instance.allCheckpoints.Length)
+            {
+                nextCheckpoint = 0;
+                currentLap++;
+            }
+        }
+
 
     }
 
